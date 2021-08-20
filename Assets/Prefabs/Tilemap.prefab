@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 247091963859612575}
   - component: {fileID: 2047281062498766791}
   - component: {fileID: 7519125546440602119}
+  - component: {fileID: 453540352423415681}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -210,3 +211,19 @@ CompositeCollider2D:
     m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &453540352423415681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7453530660746313350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fa3c2fa4c779844b593c2ba60b1e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapDirection: {fileID: 11400000, guid: 21076339b79b91c40a14cff5e682eae4, type: 2}
+  rotatableTileDB: {fileID: 11400000, guid: 990a058dba991384da55d9b156c1633d, type: 2}
+  tilemapDirection: 0
+  rotatableTiles: []

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,6 +16,7 @@ public class RotatableTilemap : MonoBehaviour
 
     private Tilemap _tilemap;
     [SerializeField] private MapDirection mapDirection;
+    [SerializeField] private RotatableTileDB rotatableTileDB;
     [SerializeField] private IsoDirection tilemapDirection;
     [SerializeField] private List<RotatableTile> rotatableTiles;
 
@@ -75,19 +75,31 @@ public class RotatableTilemap : MonoBehaviour
 
         foreach (var rotatable in rotatableTiles)
         {
-            // Swap and Negate the Y (90 flip)
-            var newPosition = new Vector3Int(-rotatable.tilePosition.y, rotatable.tilePosition.x, rotatable.tilePosition.z);
-            _tilemap.SetTile(newPosition, rotatable.tile);
+            var newPosition = new Vector3Int(rotatable.tilePosition.y, -rotatable.tilePosition.x, rotatable.tilePosition.z);
+            var newTile = rotatableTileDB.GetRotatedRight(rotatable.tile);
+            _tilemap.SetTile(newPosition, newTile);
             rotatable.tilePosition = newPosition;
+            rotatable.tile = newTile;
         }
     }
 
     public void RotateLeft()
     {
-        // Swap and Negate the X (-90 flip)
-        var newTilemapDirectionInt = (int) tilemapDirection - 1;
-        if (newTilemapDirectionInt == 0)
-            newTilemapDirectionInt = (int) IsoDirection.Size - 1;
+        var newTilemapDirectionInt = (int) tilemapDirection + 1;
+        if (newTilemapDirectionInt == (int) IsoDirection.Size)
+            newTilemapDirectionInt = 0;
         tilemapDirection = (IsoDirection) newTilemapDirectionInt;
+        
+        foreach(var rotatable in rotatableTiles)
+            _tilemap.SetTile(rotatable.tilePosition, null);
+
+        foreach (var rotatable in rotatableTiles)
+        {
+            var newPosition = new Vector3Int(-rotatable.tilePosition.y, rotatable.tilePosition.x, rotatable.tilePosition.z);
+            var newTile = rotatableTileDB.GetRotatedRight(rotatable.tile);
+            _tilemap.SetTile(newPosition, newTile);
+            rotatable.tilePosition = newPosition;
+            rotatable.tile = newTile;
+        }
     }
 }

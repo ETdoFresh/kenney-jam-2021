@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fabeb2a2f88aa64482071859651cbb8, type: 3}
+  m_Name: RotatableTileDB
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: fb5412abae25c8943bcc4ed2de63ffaa, type: 2}
+  - {fileID: 11400000, guid: 6069c39cdcbd26744961e2bea4d24137, type: 2}
+  - {fileID: 11400000, guid: 33220f47341ce19419b2a006b07c3040, type: 2}
+  - {fileID: 11400000, guid: 8b4224a4db9114c49852f82e21193942, type: 2}
+  - {fileID: 11400000, guid: 4088fd08201134c47a698844e317e7fe, type: 2}
+  - {fileID: 11400000, guid: b21ab76148ff8934abb8c209c020ffde, type: 2}
+  - {fileID: 11400000, guid: 13c5ce3d9d303f548ae0d273bf4da28e, type: 2}
+  - {fileID: 11400000, guid: 3e718bd4ac2ae614ea48d73db43fcc96, type: 2}
+  - {fileID: 11400000, guid: 49441187f54e9c74b9ad9003d6d3efc8, type: 2}
+  - {fileID: 11400000, guid: a3f8f2358abcbbe48a4e50716bfe220d, type: 2}
+  - {fileID: 11400000, guid: 3c3d2494aceff7c43ad9555f2524e161, type: 2}
+  - {fileID: 11400000, guid: 59cce630e306e6b45870514b3f2db9c9, type: 2}

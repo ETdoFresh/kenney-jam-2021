@@ -6,6 +6,7 @@ public class PlayerCharacter : MonoBehaviour
     private Transform _transform;
     private Rigidbody2D _rigidbody2D;
     private Controls _controls;
+    public Vector3 movementInput;
 
     private void Awake()
     {
@@ -24,10 +25,26 @@ public class PlayerCharacter : MonoBehaviour
         _controls?.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         var position = _transform.position;
-        position += (Vector3)_controls.Gameplay.Movement.ReadValue<Vector2>() * (speed * Time.deltaTime);
+        movementInput = (Vector3) _controls.Gameplay.Movement.ReadValue<Vector2>();
+        position += speed * Time.deltaTime * movementInput;
         _rigidbody2D.MovePosition(position);
+    }
+
+    public void RotateRight()
+    {
+        // TODO: Get Center of Floor Tilemap. Rotate around center of floor.
+        var _transform = transform;
+        var position = _transform.position;
+        _transform.position = new Vector3(position.y * 2, -position.x / 2, position.z);
+    }
+
+    public void RotateLeft()
+    {
+        var _transform = transform;
+        var position = _transform.position;
+        _transform.position = new Vector3(-position.y * 2, position.x / 2, position.z);
     }
 }

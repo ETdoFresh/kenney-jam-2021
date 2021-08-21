@@ -26,6 +26,18 @@ public class RotatableTilemap : MonoBehaviour
         PopulateTiles();
     }
 
+    private void OnEnable()
+    {
+        FindObjectOfType<RotateLeftButton>()?.AddListener(RotateLeft);
+        FindObjectOfType<RotateRightButton>()?.AddListener(RotateRight);
+    }
+    
+    private void OnDisable()
+    {
+        FindObjectOfType<RotateLeftButton>()?.RemoveListener(RotateLeft);
+        FindObjectOfType<RotateRightButton>()?.RemoveListener(RotateRight);
+    }
+
     private static IsoDirection GetDirectionFromName(string rotatableTileTileName)
     {
         if (rotatableTileTileName.EndsWith("NE")) return IsoDirection.NorthEast;

@@ -92,6 +92,32 @@ public class SpritePhysicsShapeEditor
             }
         }
     }
+    
+    [MenuItem("Assets/Tools/Sprites/Clear Physics Shape", false)]
+    static void ClearSpritePhysicsShape()
+    {
+        List<Sprite> sprites = GetSpritesFromSelection();
+
+        if (sprites.Count > 0)
+        {
+            //Undo.RecordObjects(sprites.ToArray(), "Paste sprites physics shape");
+
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                var path = AssetDatabase.GetAssetPath(sprites[i]);
+                destinationSprites.Add(sprites[i].name);
+
+                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                var physicsShapeProperty = GetPhysicsShapeProperty(importer, sprites[i].name);
+                physicsShapeProperty.ClearArray();
+                physicsShapeProperty.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+
+                AssetDatabase.ForceReserializeAssets(new string[] {importer.assetPath},
+                    ForceReserializeAssetsOptions.ReserializeMetadata);
+                importer.SaveAndReimport();
+            }
+        }
+    }
 
     public static List<Sprite> GetSpritesFromSelection()
     {

@@ -11,28 +11,36 @@ public class PlayerCharacter : MonoBehaviour
     private Controls _controls;
     public Vector3 movementInput;
 
+    public int currentFloor;
     public Tilemap tilemap;
     public Vector3Int tilePosition;
     public Vector3 tileCenter;
+    public int spriteOrderOffset;
+
+    public Vector3Int TilePosition => tilePosition;
 
     private void Awake()
     {
         _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        tilemap = FindObjectOfType<Tilemap>();
-        
+        spriteOrderOffset = _spriteRenderer.sortingOrder;
+        if (!tilemap) tilemap = FindObjectOfType<Tilemap>();
     }
 
     private void OnEnable()
     {
         _controls ??= new Controls();
         _controls?.Enable();
+        FindObjectOfType<RotateLeftButton>()?.AddListener(RotateLeft);
+        FindObjectOfType<RotateRightButton>()?.AddListener(RotateRight);
     }
 
     private void OnDisable()
     {
         _controls?.Disable();
+        FindObjectOfType<RotateLeftButton>()?.RemoveListener(RotateLeft);
+        FindObjectOfType<RotateRightButton>()?.RemoveListener(RotateRight);
     }
 
     private void Update()
@@ -69,6 +77,12 @@ public class PlayerCharacter : MonoBehaviour
         delta.y /= 2;
         delta.x *= 2;
         _transform.position = tileCenter + delta;
+    }
+
+    public void SetFloor(int floor)
+    {
+        currentFloor = floor;
+        _spriteRenderer.sortingOrder = floor * 10 + spriteOrderOffset;
     }
 
     private void OnDrawGizmos()

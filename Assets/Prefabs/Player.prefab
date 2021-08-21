@@ -83,13 +83,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5256337cb3d18b4f98f1baf5717440e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zCollisionManager: {fileID: 11400000, guid: 9879b7e164b390f49b8511328e3b04cd, type: 2}
   speed: 5
+  floorHeight: {fileID: 11400000, guid: 4596caf28a1ff1e4faf261316fe176a8, type: 2}
   movementInput: {x: 0, y: 0, z: 0}
   currentFloor: 0
   tilemap: {fileID: 0}
-  tilePosition: {x: 0, y: 0, z: 0}
-  tileCenter: {x: 0, y: 0, z: 0}
-  spriteOrderOffset: 0
+  tileCellPosition: {x: 0, y: 0, z: 0}
+  tileWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1549697181937171575
 GameObject:
   m_ObjectHideFlags: 0

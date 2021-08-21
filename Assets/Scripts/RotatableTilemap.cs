@@ -96,7 +96,7 @@ public class RotatableTilemap : MonoBehaviour
         foreach (var rotatable in rotatableTiles)
         {
             var newPosition = new Vector3Int(-rotatable.tilePosition.y, rotatable.tilePosition.x, rotatable.tilePosition.z);
-            var newTile = rotatableTileDB.GetRotatedRight(rotatable.tile);
+            var newTile = rotatableTileDB.GetRotatedLeft(rotatable.tile);
             _tilemap.SetTile(newPosition, newTile);
             rotatable.tilePosition = newPosition;
             rotatable.tile = newTile;

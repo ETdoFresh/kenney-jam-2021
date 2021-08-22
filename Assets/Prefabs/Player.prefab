@@ -84,13 +84,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zCollisionManager: {fileID: 11400000, guid: 9879b7e164b390f49b8511328e3b04cd, type: 2}
-  speed: 5
   floorHeight: {fileID: 11400000, guid: 4596caf28a1ff1e4faf261316fe176a8, type: 2}
+  speed: 5
   movementInput: {x: 0, y: 0, z: 0}
-  currentFloor: 0
   tilemap: {fileID: 0}
   tileCellPosition: {x: 0, y: 0, z: 0}
   tileWorldPosition: {x: 0, y: 0, z: 0}
+  tileGroundWorldPosition: {x: 0, y: 0, z: 0}
+  groundWorldPosition: {x: 0, y: 0, z: 0}
+  currentHeightWorldPosition: {x: 0, y: 0, z: 0}
+  targetZ: 0
 --- !u!1 &1549697181937171575
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +164,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6986027e5fc5d954bb47f75cb2afbe30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

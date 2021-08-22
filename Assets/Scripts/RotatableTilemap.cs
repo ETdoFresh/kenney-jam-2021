@@ -38,20 +38,6 @@ public class RotatableTilemap : MonoBehaviour
         FindObjectOfType<RotateRightButton>()?.RemoveListener(RotateRight);
     }
 
-    private static IsoDirection GetDirectionFromName(string rotatableTileTileName)
-    {
-        if (rotatableTileTileName.EndsWith("NE")) return IsoDirection.NorthEast;
-        if (rotatableTileTileName.EndsWith("NW")) return IsoDirection.NorthWest;
-        if (rotatableTileTileName.EndsWith("SE")) return IsoDirection.SouthEast;
-        if (rotatableTileTileName.EndsWith("SW")) return IsoDirection.SouthWest;
-        if (rotatableTileTileName.EndsWith("E")) return IsoDirection.NorthEast;
-        if (rotatableTileTileName.EndsWith("N")) return IsoDirection.NorthWest;
-        if (rotatableTileTileName.EndsWith("S")) return IsoDirection.SouthEast;
-        // ReSharper disable once ConvertIfStatementToReturnStatement
-        if (rotatableTileTileName.EndsWith("W")) return IsoDirection.SouthWest;
-        return IsoDirection.NorthEast;
-    }
-
     private void PopulateTiles()
     {
         rotatableTiles.Clear();
@@ -65,7 +51,7 @@ public class RotatableTilemap : MonoBehaviour
             if (!rotatableTile.tile) continue;
             rotatableTile.tilePosition = tilePosition;
             rotatableTile.tileName = rotatableTile.tile.sprite.name;
-            rotatableTile.initialDirection = GetDirectionFromName(rotatableTile.tileName);
+            rotatableTile.initialDirection = rotatableTileDB.GetDirection(rotatableTile.tile);
             rotatableTiles.Add(rotatableTile);
         }
     }

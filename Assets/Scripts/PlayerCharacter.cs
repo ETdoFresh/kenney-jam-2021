@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] private ZCollisionManager zCollisionManager;
     [SerializeField] private FloatValue floorHeight;
+    [SerializeField] private Transform model;
     [SerializeField] private float speed = 5;
-    private Transform _transform;
+    [SerializeField] private Vector3 targetForwardDirection = Vector3.forward;
+    [SerializeField] private float rotationSpeed = 1;
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Controls _controls;
@@ -18,20 +21,22 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private Vector3 tileGroundWorldPosition;
     [SerializeField] private Vector3 groundWorldPosition;
     [SerializeField] private Vector3 currentHeightWorldPosition;
-
-    private int _previousFloor;
+    [SerializeField] public float targetZ;
+    private Animator _animator;
+    private Vector3 _delta;
+    private static readonly int Speed = Animator.StringToHash("Speed");
 
     public Vector3Int TileCellPosition => tileCellPosition;
-    public Vector3 TileGroundWorldPosition => tileGroundWorldPosition;
     public Vector3 GroundWorldPosition => groundWorldPosition;
-    public int CurrentFloor => Mathf.RoundToInt(_transform.position.z / floorHeight);
+    public int CurrentFloor => Mathf.RoundToInt(_spriteRenderer.transform.position.z / floorHeight);
 
     private void Awake()
     {
-        _transform = GetComponent<Transform>();
+        _animator = GetComponentInChildren<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (!tilemap) tilemap = FindObjectOfType<Tilemap>();
+        UpdateRenderSortOrder(CurrentFloor);
     }
 
     private void OnEnable()
@@ -51,9 +56,20 @@ public class PlayerCharacter : MonoBehaviour
         zCollisionManager.DeregisterPlayerCharacter(this);
     }
 
+    private void Update()
+    {
+        var spritePosition = _spriteRenderer.transform.position;
+        spritePosition.z = targetZ;
+        spritePosition.z += Random.Range(0, 0.0000001f);
+        _spriteRenderer.transform.position = spritePosition;
+        var targetRotation = Quaternion.LookRotation(targetForwardDirection);
+        model.rotation = Quaternion.RotateTowards(model.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+    }
+
     private void FixedUpdate()
     {
-        var worldPosition = _transform.position;
+        var worldPosition = transform.position;
+        worldPosition.z = targetZ;
         tileCellPosition = tilemap.WorldToCell(worldPosition);
         tileWorldPosition = tilemap.CellToWorld(tileCellPosition) + new Vector3(0, 0.25f, 0);
 
@@ -64,49 +80,51 @@ public class PlayerCharacter : MonoBehaviour
         currentHeightWorldPosition = tileGroundWorldPosition;
         currentHeightWorldPosition.y += worldPosition.z * 0.25f;
 
-        var delta = worldPosition - currentHeightWorldPosition;
-        delta.z = 0;
-        groundWorldPosition = tileGroundWorldPosition + delta;
-
-        if (_previousFloor != CurrentFloor)
-        {
-            _previousFloor = CurrentFloor;
-            zCollisionManager.UpdateCollisionLayers();
-        }
-
-        var position = _transform.position;
+        _delta = worldPosition - currentHeightWorldPosition;
+        _delta.z = 0;
+        groundWorldPosition = tileGroundWorldPosition + _delta;
+        
+        var position = transform.position;
         movementInput = _controls.Gameplay.Movement.ReadValue<Vector2>();
+        if (movementInput.sqrMagnitude > 0)
+            targetForwardDirection = new Vector3(movementInput.x, 0, movementInput.y);
         position += speed * Time.deltaTime * movementInput;
+        var animatorSpeed = Mathf.Clamp01(movementInput.magnitude);
+        _animator.SetFloat(Speed, animatorSpeed);
         _rigidbody2D.MovePosition(position);
     }
 
     public void RotateRight()
     {
-        var position = _transform.position;
-        var delta = position - tileWorldPosition;
-        delta.z = 0;
-        delta = Quaternion.AngleAxis(90, Vector3.back) * delta;
+        var delta = Quaternion.AngleAxis(90, Vector3.back) * _delta;
         delta.y /= 2;
         delta.x *= 2;
 
         tileCellPosition = new Vector3Int(tileCellPosition.y, -tileCellPosition.x, tileCellPosition.z);
         tileWorldPosition = tilemap.CellToWorld(tileCellPosition) + new Vector3(0, 0.25f, 0);
-
-        _transform.position = tileWorldPosition + delta;
+        
+        var tileGroundCellPosition = tileCellPosition;
+        tileGroundCellPosition.z = 0;
+        tileGroundWorldPosition = tilemap.CellToWorld(tileGroundCellPosition) + new Vector3(0, 0.25f, 0);
+        currentHeightWorldPosition = tileGroundWorldPosition;
+        currentHeightWorldPosition.y += targetZ * 0.25f;
+        groundWorldPosition = tileGroundWorldPosition + delta;
+        //_rigidbody2D.MovePosition(currentHeightWorldPosition + delta);
+        transform.position = currentHeightWorldPosition + delta;
     }
 
     public void RotateLeft()
     {
-        var delta = _transform.position - tileWorldPosition;
+        var delta = transform.position - tileWorldPosition;
         tileCellPosition = new Vector3Int(-tileCellPosition.y, tileCellPosition.x, tileCellPosition.z);
         tileWorldPosition = tilemap.CellToWorld(tileCellPosition) + new Vector3(0, 0.25f, 0);
         delta = Quaternion.AngleAxis(-90, Vector3.back) * delta;
         delta.y /= 2;
         delta.x *= 2;
-        _transform.position = tileWorldPosition + delta;
+        transform.position = tileWorldPosition + delta;
     }
 
-    public void SetRenderFloor(int floor)
+    public void UpdateRenderSortOrder(int floor)
     {
         _spriteRenderer.sortingOrder = floor;
     }
@@ -125,7 +143,7 @@ public class PlayerCharacter : MonoBehaviour
             Gizmos.DrawLine(tileGroundWorldPosition, currentHeightWorldPosition);
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(currentHeightWorldPosition, 0.05f);
-            Gizmos.DrawLine(_transform.position, currentHeightWorldPosition);
+            Gizmos.DrawLine(transform.position, currentHeightWorldPosition);
         }
     }
 }

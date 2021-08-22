@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a58a50b5a430be240a8214cbd8558d9f, type: 3}
   m_Name: FloorHeight
   m_EditorClassIdentifier: 
-  value: 2.46
+  value: 2.4666667

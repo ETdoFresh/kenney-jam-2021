@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 public class SlopeGenerator : MonoBehaviour
 {
     public GameObject slopePrefab;
+    public string keyword = "slope";
     public bool enableSpriteRenderer;
 }
 
@@ -31,7 +32,7 @@ class SlopeGeneratorEditor : UnityEditor.Editor
                     var tilePosition = new Vector3Int(x, y, z);
                     var tile = tilemap.GetTile<Tile>(tilePosition);
                     if (tile)
-                        if (tile.name.Contains("slope"))
+                        if (tile.name.Contains(slopeGenerator.keyword))
                         {
                             var slopeGameObject = Instantiate(slopeGenerator.slopePrefab);
                             slopeGameObject.name = $"{tile.name}_{x}_{y}_{z}";

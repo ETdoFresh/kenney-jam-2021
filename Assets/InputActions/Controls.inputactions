@@ -14,14 +14,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "dbadce5d-f777-4d8f-8837-99e18c78d64b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "27923f78-41e3-4e67-bc43-97dda63547c8",
@@ -30,9 +22,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump",
+                    "name": "RotateRight",
                     "type": "Button",
-                    "id": "5d71db73-94c5-4c8c-9c83-4cdad0b90a23",
+                    "id": "a1513d6a-0004-4b2a-906e-788701223831",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RotateLeft",
+                    "type": "Button",
+                    "id": "4ca31543-cf67-40d5-a2cc-30f930a5fa73",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -162,41 +162,8 @@
                 },
                 {
                     "name": "",
-                    "id": "ae410af2-6ff3-4891-98a4-ad09b713eb98",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f0ff5376-6a38-4150-b54d-a04ee36abb9b",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a93ad151-d758-4aff-bef3-d498e79c96ce",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "19cbb88c-b59d-4639-a08b-bfd44c905328",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -228,23 +195,78 @@
                 },
                 {
                     "name": "",
-                    "id": "7578cfac-8894-42c1-92aa-118207989cb3",
-                    "path": "<Keyboard>/space",
+                    "id": "05a6c34f-c960-4d36-9c68-b63ba197f0a1",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "bac703da-3c47-40f1-8199-a2b9cafe8ff3",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "7e487a55-b748-483c-973b-4182aca00620",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae959ba3-91dc-4029-8073-5df191386dcf",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa6b234a-36af-434a-a087-b01632a7c290",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19723596-a3be-4746-8349-289ee64a39a9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "869ef6ac-904e-4925-b1ef-884205e36f2f",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12454f8d-6d48-45ca-9c51-d962facfb806",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,4 +1,7 @@
+using UnityEditor.Events;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
@@ -7,6 +10,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private ZCollisionManager zCollisionManager;
     [SerializeField] private FloatValue floorHeight;
     [SerializeField] private Transform model;
+    [SerializeField] private DialogDB dialogDB;
     [SerializeField] private float speed = 5;
     [SerializeField] private Vector3 targetForwardDirection = Vector3.forward;
     [SerializeField] private float rotationSpeed = 1;
@@ -29,6 +33,9 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float animAccelerationRate = 5;
     [SerializeField] private float animDecelerationRate = 1;
 
+    public UnityEvent rotateLeft;
+    public UnityEvent rotateRight;
+
     public Vector3Int TileCellPosition => tileCellPosition;
     public Vector3 GroundWorldPosition => groundWorldPosition;
     public int CurrentFloor => Mathf.RoundToInt(_spriteRenderer.transform.position.z / floorHeight);
@@ -46,16 +53,19 @@ public class PlayerCharacter : MonoBehaviour
     {
         _controls ??= new Controls();
         _controls?.Enable();
-        FindObjectOfType<RotateLeftButton>()?.AddListener(RotateLeft);
-        FindObjectOfType<RotateRightButton>()?.AddListener(RotateRight);
+        _controls.Gameplay.RotateLeft.performed += OnRotateLeft;
+        _controls.Gameplay.RotateRight.performed += OnRotateRight;
         zCollisionManager.RegisterPlayerCharacter(this);
     }
 
     private void OnDisable()
     {
-        _controls?.Disable();
-        FindObjectOfType<RotateLeftButton>()?.RemoveListener(RotateLeft);
-        FindObjectOfType<RotateRightButton>()?.RemoveListener(RotateRight);
+        if (_controls != null)
+        {
+            _controls.Disable();
+            _controls.Gameplay.RotateLeft.performed -= OnRotateLeft;
+            _controls.Gameplay.RotateRight.performed -= OnRotateRight;
+        }
         zCollisionManager.DeregisterPlayerCharacter(this);
     }
 
@@ -63,7 +73,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         var spritePosition = _spriteRenderer.transform.position;
         spritePosition.z = targetZ;
-        spritePosition.z += Random.Range(0, 0.0000001f);
+        //spritePosition.z += Random.Range(0, 0.0000001f);
         _spriteRenderer.transform.position = spritePosition;
         var targetRotation = Quaternion.LookRotation(targetForwardDirection);
         model.rotation = Quaternion.RotateTowards(model.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -91,6 +101,7 @@ public class PlayerCharacter : MonoBehaviour
         movementInput = _controls.Gameplay.Movement.ReadValue<Vector2>();
         if (movementInput.sqrMagnitude > 0)
             targetForwardDirection = new Vector3(movementInput.x, 0, movementInput.y);
+        if (dialogDB.isShowingText) movementInput = Vector3.zero;
         position += speed * Time.deltaTime * movementInput;
         var newAnimSpeed = movementInput.magnitude * speed;
         animSpeed = animSpeed < newAnimSpeed ?
@@ -98,6 +109,18 @@ public class PlayerCharacter : MonoBehaviour
             Mathf.Lerp(animSpeed, newAnimSpeed, animDecelerationRate * Time.fixedDeltaTime);
         _animator.SetFloat(Speed, animSpeed);
         _rigidbody2D.MovePosition(position);
+    }
+
+    private void OnRotateLeft(InputAction.CallbackContext obj)
+    {
+        RotateLeft();
+        rotateLeft.Invoke();
+    }
+
+    private void OnRotateRight(InputAction.CallbackContext obj)
+    {
+        RotateRight();
+        rotateRight.Invoke();
     }
 
     public void RotateRight()

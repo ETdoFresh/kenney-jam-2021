@@ -28,14 +28,14 @@ public class RotatableTilemap : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<RotateLeftButton>()?.AddListener(RotateLeft);
-        FindObjectOfType<RotateRightButton>()?.AddListener(RotateRight);
+        FindObjectOfType<PlayerCharacter>()?.rotateLeft.AddListener(RotateLeft);
+        FindObjectOfType<PlayerCharacter>()?.rotateRight.AddListener(RotateRight);
     }
     
     private void OnDisable()
     {
-        FindObjectOfType<RotateLeftButton>()?.RemoveListener(RotateLeft);
-        FindObjectOfType<RotateRightButton>()?.RemoveListener(RotateRight);
+        FindObjectOfType<PlayerCharacter>()?.rotateLeft.RemoveListener(RotateLeft);
+        FindObjectOfType<PlayerCharacter>()?.rotateRight.RemoveListener(RotateRight);
     }
 
     private void PopulateTiles()

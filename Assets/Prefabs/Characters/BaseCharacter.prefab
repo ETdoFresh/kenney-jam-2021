@@ -2025,7 +2025,7 @@ Transform:
   m_GameObject: {fileID: 7777654497780468942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 888204958434425257}
   m_RootOrder: 0
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   - {x: -0.24728966, y: 0.08454704, z: 0}
   m_ShapePathHash: 913240613
   m_Mesh: {fileID: 0}
-  m_InstanceId: -469484
+  m_InstanceId: -727304
 --- !u!1 &8339304075272391736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,6 +2200,7 @@ MonoBehaviour:
   zCollisionManager: {fileID: 11400000, guid: 9879b7e164b390f49b8511328e3b04cd, type: 2}
   floorHeight: {fileID: 11400000, guid: 4596caf28a1ff1e4faf261316fe176a8, type: 2}
   model: {fileID: 6729609927232459477}
+  dialogDB: {fileID: 11400000, guid: 092ef66197810084eb015e43b226b0ff, type: 2}
   speed: 3
   targetForwardDirection: {x: 0, y: 0, z: -1}
   rotationSpeed: 1080

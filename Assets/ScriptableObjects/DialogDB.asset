@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a382135d0dd2547b87aa743a6a63aa, type: 3}
+  m_Name: DialogDB
+  m_EditorClassIdentifier: 
+  values:
+  - 'Hello!
+
+    Welcome to Isolandia!'
+  - Isolandia. A place where I isolate myself and make isometric games!
+  - Can you believe this is my first isometric game!?! I can!
+  - I really enjoyed making this! I spent way too many hours on it!
+  - Kenney really has a lot of cool assets!
+  - Get close to the flag to finish this level!
+  - Here's how I made the characters!
+  - '<b>Base Character:</b>
+
+    I am a 3d object. But I got rendered to a Unity
+    Render Texture!'
+  - '<b>Criminal:</b>
+
+    So, I am super smooth, but can interact and be hidden
+    by all the isometricness!'
+  - '<b>Cyborg:</b>
+
+    Even my animations get rendered!'
+  - '<b>Skater Boi:</b>
+
+    Welp, get to the flag to see what''s next!'
+  - Oh my gawd! Slopes were so hard! I spent 6 hours on this alone! And they still
+    kinda suck! :P
+  - So, rotation... huh... yeah, I got that covered too! Next level!
+  - Elevation! Not just flat land! This is where it gets fun!
+  - Per usual! Find the flag!
+  - 'Use ROTATION to find the flag. Keyboard: Q/E, Joystick: L/R (It''s buggy though!)'
+  - No, really! Use your rotation commands!! That's how you'll get to the next level!
+  dialogUI: {fileID: 0}
+  isShowingText: 0

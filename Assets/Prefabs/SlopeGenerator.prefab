@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slopePrefab: {fileID: 1348544982867292271, guid: 549cf73dd845d554194293b5b809045c, type: 3}
+  keyword: Slope
+  enableSpriteRenderer: 0

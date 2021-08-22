@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -48,8 +47,14 @@ public class SlopeTile : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<RotateLeftButton>()?.AddListener(RotateLeft);
-        FindObjectOfType<RotateRightButton>()?.AddListener(RotateRight);
+        FindObjectOfType<PlayerCharacter>()?.rotateLeft.AddListener(RotateLeft);
+        FindObjectOfType<PlayerCharacter>()?.rotateRight.AddListener(RotateRight);
+    }
+
+    private void OnDisable()
+    {
+        FindObjectOfType<PlayerCharacter>()?.rotateLeft.RemoveListener(RotateLeft);
+        FindObjectOfType<PlayerCharacter>()?.rotateRight.RemoveListener(RotateRight);
     }
 
     private void Update()

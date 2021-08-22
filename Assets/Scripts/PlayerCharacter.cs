@@ -1,9 +1,7 @@
-using UnityEditor.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using Random = UnityEngine.Random;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -32,6 +30,7 @@ public class PlayerCharacter : MonoBehaviour
     private static readonly int Speed = Animator.StringToHash("Speed");
     [SerializeField] private float animAccelerationRate = 5;
     [SerializeField] private float animDecelerationRate = 1;
+    [SerializeField] private bool canRotateMap;
 
     public UnityEvent rotateLeft;
     public UnityEvent rotateRight;
@@ -113,12 +112,14 @@ public class PlayerCharacter : MonoBehaviour
 
     private void OnRotateLeft(InputAction.CallbackContext obj)
     {
+        if (!canRotateMap) return;
         RotateLeft();
         rotateLeft.Invoke();
     }
 
     private void OnRotateRight(InputAction.CallbackContext obj)
     {
+        if (!canRotateMap) return;
         RotateRight();
         rotateRight.Invoke();
     }

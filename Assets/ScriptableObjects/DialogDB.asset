@@ -43,5 +43,11 @@ MonoBehaviour:
   - Per usual! Find the flag!
   - 'Use ROTATION to find the flag. Keyboard: Q/E, Joystick: L/R (It''s buggy though!)'
   - No, really! Use your rotation commands!! That's how you'll get to the next level!
+  - Thanks for playing!
+  - Sorry it was mostly a tech demo!
+  - Hope it still inspired you!
+  - 'Much Appreciated! The flag will take you back to main menu!
+
+    - E.T.'
   dialogUI: {fileID: 0}
   isShowingText: 0

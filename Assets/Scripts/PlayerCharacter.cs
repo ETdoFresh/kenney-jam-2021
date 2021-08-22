@@ -89,7 +89,7 @@ public class PlayerCharacter : MonoBehaviour
         if (movementInput.sqrMagnitude > 0)
             targetForwardDirection = new Vector3(movementInput.x, 0, movementInput.y);
         position += speed * Time.deltaTime * movementInput;
-        var animatorSpeed = Mathf.Clamp01(movementInput.magnitude);
+        var animatorSpeed = movementInput.magnitude * speed;
         _animator.SetFloat(Speed, animatorSpeed);
         _rigidbody2D.MovePosition(position);
     }
@@ -111,17 +111,27 @@ public class PlayerCharacter : MonoBehaviour
         groundWorldPosition = tileGroundWorldPosition + delta;
         //_rigidbody2D.MovePosition(currentHeightWorldPosition + delta);
         transform.position = currentHeightWorldPosition + delta;
+        targetForwardDirection = Quaternion.AngleAxis(90, Vector3.up) * targetForwardDirection;
     }
 
     public void RotateLeft()
     {
-        var delta = transform.position - tileWorldPosition;
-        tileCellPosition = new Vector3Int(-tileCellPosition.y, tileCellPosition.x, tileCellPosition.z);
-        tileWorldPosition = tilemap.CellToWorld(tileCellPosition) + new Vector3(0, 0.25f, 0);
-        delta = Quaternion.AngleAxis(-90, Vector3.back) * delta;
+        var delta = Quaternion.AngleAxis(-90, Vector3.back) * _delta;
         delta.y /= 2;
         delta.x *= 2;
-        transform.position = tileWorldPosition + delta;
+
+        tileCellPosition = new Vector3Int(-tileCellPosition.y, tileCellPosition.x, tileCellPosition.z);
+        tileWorldPosition = tilemap.CellToWorld(tileCellPosition) + new Vector3(0, 0.25f, 0);
+        
+        var tileGroundCellPosition = tileCellPosition;
+        tileGroundCellPosition.z = 0;
+        tileGroundWorldPosition = tilemap.CellToWorld(tileGroundCellPosition) + new Vector3(0, 0.25f, 0);
+        currentHeightWorldPosition = tileGroundWorldPosition;
+        currentHeightWorldPosition.y += targetZ * 0.25f;
+        groundWorldPosition = tileGroundWorldPosition + delta;
+        //_rigidbody2D.MovePosition(currentHeightWorldPosition + delta);
+        transform.position = currentHeightWorldPosition + delta;
+        targetForwardDirection = Quaternion.AngleAxis(-90, Vector3.up) * targetForwardDirection;
     }
 
     public void UpdateRenderSortOrder(int floor)

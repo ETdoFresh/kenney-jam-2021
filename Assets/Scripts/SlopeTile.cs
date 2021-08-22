@@ -103,7 +103,15 @@ public class SlopeTile : MonoBehaviour
 
     private void RotateLeft()
     {
-        throw new NotImplementedException();
+        var newPosition = new Vector3Int(-tileCellPosition.y, tileCellPosition.x, tileCellPosition.z);
+        SetRotation(rotatableTileDB.GetRotatedLeft(slopeTile));
+        SetPosition(newPosition, tilemap);
+        DisableAllColliders();
+        if (isOnSlope)
+        {
+            zCollisionManager.DisableCollisionLayers();
+            currentCollider.SetActive(true);
+        }
     }
 
     private void RotateRight()

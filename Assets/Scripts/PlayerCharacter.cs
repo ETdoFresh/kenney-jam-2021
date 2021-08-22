@@ -10,6 +10,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float speed = 5;
     [SerializeField] private Vector3 targetForwardDirection = Vector3.forward;
     [SerializeField] private float rotationSpeed = 1;
+    [SerializeField] private float animSpeed;
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Controls _controls;
@@ -25,6 +26,8 @@ public class PlayerCharacter : MonoBehaviour
     private Animator _animator;
     private Vector3 _delta;
     private static readonly int Speed = Animator.StringToHash("Speed");
+    [SerializeField] private float animAccelerationRate = 5;
+    [SerializeField] private float animDecelerationRate = 1;
 
     public Vector3Int TileCellPosition => tileCellPosition;
     public Vector3 GroundWorldPosition => groundWorldPosition;
@@ -89,8 +92,11 @@ public class PlayerCharacter : MonoBehaviour
         if (movementInput.sqrMagnitude > 0)
             targetForwardDirection = new Vector3(movementInput.x, 0, movementInput.y);
         position += speed * Time.deltaTime * movementInput;
-        var animatorSpeed = movementInput.magnitude * speed;
-        _animator.SetFloat(Speed, animatorSpeed);
+        var newAnimSpeed = movementInput.magnitude * speed;
+        animSpeed = animSpeed < newAnimSpeed ?
+            Mathf.Lerp(animSpeed, newAnimSpeed, animAccelerationRate * Time.fixedDeltaTime) : 
+            Mathf.Lerp(animSpeed, newAnimSpeed, animDecelerationRate * Time.fixedDeltaTime);
+        _animator.SetFloat(Speed, animSpeed);
         _rigidbody2D.MovePosition(position);
     }
 
@@ -155,5 +161,13 @@ public class PlayerCharacter : MonoBehaviour
             Gizmos.DrawSphere(currentHeightWorldPosition, 0.05f);
             Gizmos.DrawLine(transform.position, currentHeightWorldPosition);
         }
+    }
+
+    private float MoveTowards(float from, float to, float rate)
+    {
+        var range = Mathf.Abs(to - from);
+        if (range <= rate) return to;
+        var sign = Mathf.Sign(to - from);
+        return from + sign * rate;
     }
 }

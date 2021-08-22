@@ -2203,6 +2203,7 @@ MonoBehaviour:
   speed: 3
   targetForwardDirection: {x: 0, y: 0, z: -1}
   rotationSpeed: 1080
+  animSpeed: 0
   movementInput: {x: 0, y: 0, z: 0}
   tilemap: {fileID: 0}
   tileCellPosition: {x: 0, y: 0, z: 0}
@@ -2211,6 +2212,8 @@ MonoBehaviour:
   groundWorldPosition: {x: 0, y: 0, z: 0}
   currentHeightWorldPosition: {x: 0, y: 0, z: 0}
   targetZ: 0
+  animAccelerationRate: 50
+  animDecelerationRate: 8
 --- !u!1 &8372214028991190459
 GameObject:
   m_ObjectHideFlags: 0

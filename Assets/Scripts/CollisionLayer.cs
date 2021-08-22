@@ -30,10 +30,10 @@ public class CollisionLayer : MonoBehaviour
         zCollisionManager.DeregisterCollisionLayer(this);
     }
 
-    public void ActivateLayer()
+    public void ActivateLayer(bool renderCollisionLayer)
     {
         _tilemapCollider.enabled = true;
-        _tilemapRenderer.enabled = true;
+        _tilemapRenderer.enabled = renderCollisionLayer;
     }
 
     public void DeactivateLayer()

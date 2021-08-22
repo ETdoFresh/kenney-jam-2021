@@ -6,6 +6,7 @@ public class ZCollisionManager : ScriptableObject
 {
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private List<CollisionLayer> collisionLayers;
+    [SerializeField] private bool renderCollisionLayer;
     public PlayerCharacter PlayerCharacter => playerCharacter;
 
     public void RegisterPlayerCharacter(PlayerCharacter newPlayerCharacter)
@@ -33,7 +34,7 @@ public class ZCollisionManager : ScriptableObject
         if (!playerCharacter) return;
         foreach (var collisionLayer in collisionLayers)
             if (playerCharacter.CurrentFloor == collisionLayer.ZLayer)
-                collisionLayer.ActivateLayer();
+                collisionLayer.ActivateLayer(renderCollisionLayer);
             else
                 collisionLayer.DeactivateLayer();
     }
